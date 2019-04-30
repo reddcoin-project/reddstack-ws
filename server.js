@@ -27,6 +27,9 @@ let app = express();
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/www/ws.html');
 });
+app.get('/docs', function (req, res) {
+    res.sendFile(__dirname + '/www/docs/index.html');
+});
 
 app.listen(`${port}`, function () {
   console.log(`Server app listening on port ${port}!`)
