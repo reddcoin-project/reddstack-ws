@@ -126,23 +126,23 @@ function startWebSocketServer(db) {
             } catch (e) {
                 return
             }
-            //console.log(`received: ${JSON.stringify(msg)}`);
+            console.log(`<= ${JSON.stringify(msg)}`);
             switch (msg.type) {
                 case 'init':
                     break;
                 case 'tipurl':
-                    console.log(`received tipurl: ${JSON.stringify(msg.payload)}`);
+                    // console.log(`received tipurl: ${JSON.stringify(msg.payload)}`);
                     let urlDetails = getTipURLDetails(msg.payload, function (result) {
-                        console.log(result);
+                        // console.log(result);
                         sendData('tipurl', result)
                     });
                     break;
                 case 'network':
-                    console.log(`received network: ${JSON.stringify(msg.payload)}`);
+                    // console.log(`received network: ${JSON.stringify(msg.payload)}`);
                     let responsePayload = {};
                     if (msg.payload.uid && msg.payload.uid.length) {
                         let networkDetails = getNetworkDetails(msg.payload, function(result) {
-                            console.log(result);
+                            // console.log(result);
 
                             if (result && result.length) {
                                 responsePayload = result[0];
@@ -168,7 +168,7 @@ function startWebSocketServer(db) {
                     }
                     break;
                 case 'version':
-                    console.log(`received version: ${JSON.stringify(msg.payload)}`);
+                    // console.log(`received version: ${JSON.stringify(msg.payload)}`);
                     //read version from file.. read direct from github when public
                     let payload = {};
                     payload['release'] = releaseObj.clientversion.release;
@@ -206,6 +206,7 @@ function startWebSocketServer(db) {
                 };
 
                 try {
+                    console.log (`=> ${JSON.stringify(payLoad)}`);
                     socket.send(JSON.stringify(payLoad), function (error) {
                         if (error === undefined)
                             return;
