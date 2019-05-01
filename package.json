@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "forever start forever.json",
+    "stop": "forever stop reddstack-ws"
   },
   "author": "gnasher@reddcoin.com",
   "license": "GPL-3.0-or-later",
