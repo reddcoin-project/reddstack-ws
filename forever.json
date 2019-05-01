@@ -4,7 +4,7 @@
   "append": true,
   "watch": true,
   "script" : "server.js",
-  "logFile": "/home/john/.reddstack-ws/reddstack-ws.server.log",
-  "outFile": "/home/john/.reddstack-ws/reddstack-ws.out.log",
-  "errFile": "/home/john/.reddstack-ws/reddstack-ws.err.log"
+  "logFile": "/home/reddcoin/.reddstack-ws/reddstack-ws.server.log",
+  "outFile": "/home/reddcoin/.reddstack-ws/reddstack-ws.out.log",
+  "errFile": "/home/reddcoin/.reddstack-ws/reddstack-ws.err.log"
 }
