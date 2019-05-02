@@ -26,6 +26,8 @@ const useragent = require('useragent');
 const MongoClient = require('mongodb').MongoClient;
 const config = require('./config');
 
+http.globalAgent.maxSockets = Infinity;
+
 const {websocket:{key, cert, port}} = config;
 let releaseObj;
 
