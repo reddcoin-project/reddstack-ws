@@ -16,6 +16,15 @@ wss.on('connection', function connection(ws) {
     });
 
     ws.send(`connection count ${userCount}`);
+
+    ws.on('close', (code, reason) => {
+        userCount--;
+        console.log(`Client Disconnected Code [${code}]`)
+    });
+
+    ws.on('error', function (err) {
+        console.log('Found error: ' + err);
+    });
 });
 
 setInterval(() => {
