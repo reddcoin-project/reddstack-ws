@@ -8,7 +8,7 @@ const path = '/websocket/';
 
 function launchClient (index) {
 
-    const connection = new WebSocket(url+path,);
+    const connection = new WebSocket(url+path);
 
     connection.onopen = () => {
         console.log(`${index}: Connection opened`)
