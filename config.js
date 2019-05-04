@@ -4,13 +4,15 @@ const os = require('os');
 
 const config = {
     app: {
-        port: 3000,
         logDir: ".reddstack-ws"
     },
     websocket: {
-        key: '/home/path/to/ssl-certificates/localhost.key',
-        cert: '/home/path/to/ReddStack/ssl-certificates/localhost.cert',
-        port: 8081,
+        key: '/path/to/ssh/privatekey.pem',
+        cert: '/path/to/ssh/certificate.pem',
+        httpPort: 8081,
+        httpsPort: 8443,
+        listeningIp: '0.0.0.0'
+        //listeningIp: '::'
 
     },
     db: {
