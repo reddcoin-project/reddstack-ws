@@ -1,6 +1,43 @@
+const fs = require('fs');
 const WebSocket = require('ws');
+const http = require('http');
+const https = require('https');
+const url = require('url');
+const express = require('express');
 
-const wss = new WebSocket.Server({ port: 8080, path:'/ws/' });
+let app = express();
+
+// redirect unsecure http connection
+app.use( function (req, res, next) {
+    if(!req.secure) {
+        var secureUrl = "https://" + req.headers['host'] + req.url;
+        res.writeHead(301, { "Location":  secureUrl });
+        res.end();
+    }
+    next();
+});
+
+app.get('/', function (req, res) {
+    //res.send('Now using https..');
+    res.sendFile(__dirname + '/www/ws.html');
+});
+app.get('/docs', function (req, res) {
+    res.sendFile(__dirname + '/www/docs/index.html');
+});
+
+var cert = fs.readFileSync('/path/to/certificate.pem', 'utf8');
+var key = fs.readFileSync('/path/to/privatekey.pem', 'utf8');
+
+
+var creds = {
+    cert: cert,
+    key: key
+};
+
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(creds, app);
+
+const wss = new WebSocket.Server({noServer: true} );
 
 let userCount=0;
 let userMax = 0;
@@ -25,6 +62,28 @@ wss.on('connection', function connection(ws) {
     ws.on('error', function (err) {
         console.log('Found error: ' + err);
     });
+});
+
+httpsServer.on('upgrade', function upgrade(request, socket, head) {
+    const pathname = url.parse(request.url).pathname;
+
+    if (pathname === '/websocket/') {
+        wss.handleUpgrade(request, socket, head, function done(ws) {
+            wss.emit('connection', ws, request);
+        });
+    } else {
+        socket.destroy();
+    }
+});
+
+// http server
+httpServer.listen(80, () => {
+    console.log("server starting on port : " + 80)
+});
+
+// hhtps server
+httpsServer.listen(443, () => {
+    console.log("server starting on port : " + 443)
 });
 
 setInterval(() => {
