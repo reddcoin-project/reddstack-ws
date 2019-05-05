@@ -15,7 +15,7 @@ function launchClient (index) {
     };
 
     connection.onerror = error => {
-        console.log(`${index}:WebSocket error: ${error}`)
+        console.log(`${index}:WebSocket error: ${error.message}`)
     };
 
     connection.onmessage = e => {
