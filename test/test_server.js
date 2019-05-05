@@ -4,6 +4,9 @@ const http = require('http');
 const https = require('https');
 const url = require('url');
 const express = require('express');
+const config = require('../config');
+
+const {websocket:{key, cert, ca, httpPort, httpsPort, listeningIp}} = config;
 
 let app = express();
 
@@ -25,13 +28,15 @@ app.get('/docs', function (req, res) {
     res.sendFile(__dirname + '/www/docs/index.html');
 });
 
-var cert = fs.readFileSync('/path/to/certificate.pem', 'utf8');
-var key = fs.readFileSync('/path/to/privatekey.pem', 'utf8');
+var certfile = fs.readFileSync(cert, 'utf8');
+var keyfile = fs.readFileSync(key, 'utf8');
+var cafile = fs.readFileSync(ca, 'utf8');
 
 
 var creds = {
-    cert: cert,
-    key: key
+    cert: certfile,
+    key: keyfile,
+    ca: cafile
 };
 
 const httpServer = http.createServer(app);
@@ -77,13 +82,13 @@ httpsServer.on('upgrade', function upgrade(request, socket, head) {
 });
 
 // http server
-httpServer.listen(80, () => {
-    console.log("server starting on port : " + 80)
+httpServer.listen(httpPort, listeningIp,() => {
+    console.log(`http server starting on ${listeningIp} and listening on port: ${httpPort}`)
 });
 
 // hhtps server
-httpsServer.listen(443, () => {
-    console.log("server starting on port : " + 443)
+httpsServer.listen(httpsPort, listeningIp,() => {
+    console.log(`https server starting on ${listeningIp} and listening on port: ${httpsPort}`)
 });
 
 setInterval(() => {

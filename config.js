@@ -7,13 +7,14 @@ const config = {
         logDir: ".reddstack-ws"
     },
     websocket: {
-        key: '/path/to/ssh/privatekey.pem',
-        cert: '/path/to/ssh/certificate.pem',
-        httpPort: 8081,
+        key: '/path/to/ssh/privatekey.key',
+        cert: '/path/to/ssh/certificate.crt',
+        ca: '/path/to/ssh/bundle.ca-bundle',
+        httpPort: 8080,
         httpsPort: 8443,
-        listeningIp: '0.0.0.0'
+        listeningIp: '192.168.0.112'
+        //listeningIp: '0.0.0.0'
         //listeningIp: '::'
-
     },
     db: {
         host: 'localhost',

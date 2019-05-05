@@ -49,12 +49,13 @@ app.get('/docs', function (req, res) {
 });
 
 
-const {websocket:{key, cert, httpPort, httpsPort, listeningIp}} = config;
+const {websocket:{key, cert, ca, httpPort, httpsPort, listeningIp}} = config;
 let releaseObj;
 
 var creds = {
     cert: fs.readFileSync(cert, 'utf8'),
-    key: fs.readFileSync(key, 'utf8')
+    key: fs.readFileSync(key, 'utf8'),
+    ca: fs.readFileSync(ca, 'utf8')
 };
 
 const httpServer = http.createServer(app);
@@ -101,12 +102,12 @@ function startWebSocketServer(db) {
 
     // http server
     httpServer.listen(httpPort, listeningIp, () => {
-        console.log("http server starting on port : " + httpPort)
+        console.log(`http server starting on ${listeningIp} and listening on port: ${httpPort}`)
     });
 
     // hhtps server
     httpsServer.listen(httpsPort, listeningIp,() => {
-        console.log("https server starting on port : " + httpsPort)
+        console.log(`https server starting on ${listeningIp} and listening on port: ${httpsPort}`)
     });
 
 
