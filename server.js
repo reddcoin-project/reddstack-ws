@@ -126,6 +126,8 @@ function startWebSocketServer(db) {
 
         };
 
+        console.time('broadcast connection counts');
+
         wss.clients.forEach(s => {
             try {
                 s.send(JSON.stringify(conns), function (error) {
@@ -139,6 +141,7 @@ function startWebSocketServer(db) {
                 s.close();
             }
         });
+        console.timeEnd('broadcast connection counts');
         console.log(`Users online: ${userCount}, Max Users: ${userMax}`)
     }, 10 * 1000);
 
