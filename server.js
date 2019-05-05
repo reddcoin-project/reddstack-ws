@@ -360,9 +360,7 @@ function startWebSocketServer(db) {
 }
 
 // Start the connection to mongoDB
-//startMongoDBConnection();
-var db = true;
-startWebSocketServer(db);
+startMongoDBConnection();
 
 function startMongoDBConnection(){
    MongoClient.connect('mongodb://localhost:27017/', function(err, db) {
