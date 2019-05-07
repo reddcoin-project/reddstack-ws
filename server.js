@@ -184,6 +184,9 @@ function startWebSocketServer(db) {
             }
             console.log(`<= ${JSON.stringify(msg)}`);
             switch (msg.type) {
+                case 'ping':
+                    sendData('pong', msg.payload);
+                    break;
                 case 'init':
                     break;
                 case 'tipurl':
